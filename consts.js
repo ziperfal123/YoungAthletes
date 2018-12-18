@@ -1,16 +1,5 @@
 module.exports = {
-    userName    :   'db_usr' ,
-    userPass    :   'db_pass1'
+    USERNAME    :   'db_usr' ,
+    USERPASS    :   'db_pass1',
+    MLAB_URL    :   'mongodb://db_usr:db_pass1@ds135704.mlab.com:35704/young_athletes_db'
 }
-
-
-
-
-
-
-
-// module.exports = {
-//     MLAB_URL    :   'mongodb://db_usr:db_pass1@ds135704.mlab.com:35704/young_athletes_db',
-//     USER_NAME   :   'db_usr' ,
-//     USER_PASS   :   'db_pass1'
-// }

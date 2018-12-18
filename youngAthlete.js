@@ -18,17 +18,5 @@ let schema = {
 const   youngAthlete_schema = new Schema(schema),
         YoungAthlete        = mongoose.model(`young_athletes` , youngAthlete_schema);
 
+
 module.exports = YoungAthlete;
-
-
-// youngAthlete_schema.findAll = () => {
-//     return YoungAthlete.find( {} , (err , YoungAthlete) => {
-//         if (err) {
-//             `Error :: ${err}`;
-//         }
-//         else {
-//             console.log(`${YoungAthlete}`);
-//             mongoose.disconnect();
-//         }
-//     })
-// }
