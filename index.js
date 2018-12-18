@@ -2,14 +2,13 @@ const   express         =   require('express'),
         mongoose        =   require('mongoose'),
         url             =   require('url'),
         consts          =   require('./consts.js'),
-        connector       =   require('./connector');
-const   PORT            =   process.env.PORT || 3000,
-        URL             =   consts.MLAB_URL;
+        connector       =   require('./connector'),
+        URL             =   consts.MLAB_URL,
+        PORT            =   process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
-
 
 mongoose.connect(URL , {useNewUrlParser: true}).then( () => {
     console.log(`Connected to Mongo!`);
