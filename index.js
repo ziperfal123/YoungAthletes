@@ -40,7 +40,7 @@ app.get('/getAthletesBySportNameBestRecord' , (req , res) => {
 app.post('/updateRecord' , (req , res) => {
     console.log(`You are in POST`);
     // Updating the inner field (='best_record')-> the field is located in the 'sport' object that located in the document..
-    connector.updateRecord (req , res);
+    connector.updateRecord(req , res);
 });
 
 
