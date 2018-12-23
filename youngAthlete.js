@@ -9,8 +9,7 @@ let schema = {
     sport: {
         sport_name: String,
         coach_name: String,
-        best_record: Number,
-        worst_record: Number
+        best_record: Number
     }
 }
 

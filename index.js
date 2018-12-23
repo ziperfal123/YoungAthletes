@@ -1,6 +1,7 @@
 const   express         =   require('express'),
         mongoose        =   require('mongoose'),
         url             =   require('url'),
+        morgan          =   require('morgan'),
         consts          =   require('./consts.js'),
         connector       =   require('./connector'),
         URL             =   consts.MLAB_URL,
@@ -9,24 +10,25 @@ const   express         =   require('express'),
 const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 
 mongoose.connect(URL , {useNewUrlParser: true}).then( () => {   //opening connection to the DB.
-    console.log(`Connected to Mongo!`);
+    console.log(`>> Connected to Mongo!`);
 }, err => {
-    console.log(`Error:${err}`);
+    console.log(`>> Error:${err}`);
 });
 
 
 
 app.get('/getAllAthletes' , (req , res) => {      
-    console.log(`In GET`); 
+    console.log(`>> In GET`); 
     connector.fetchAllDocuments(req , res);  
 });
 
 
 app.get('/getAthletesBySportNameBestRecord' , (req , res) => {
-    console.log(`In SUPER_GET`);
+    console.log(`>> In FILTERED_GET`);
     let urlPart = url.parse(req.url , true);
     let query   = urlPart.query;
     connector.getWithFilter(res , query);
@@ -34,18 +36,16 @@ app.get('/getAthletesBySportNameBestRecord' , (req , res) => {
 
 
 app.post('/updateRecord' , (req , res) => {
-    console.log(`In POST`);
-    // Updating the inner field (='best_record')-> the field is located in the 'sport' object that located in the document..
+    console.log(`>> In POST`);
     connector.updateRecord(req , res);
 });
 
 
 app.all('*' , (req , res) => {      //FallBack. For handling invalid routes
-    console.log(`Invalid route was entered by the user.`)
     res.json(`Invalid route, please try again`);
+    console.log(`>> Invalid route was entered by the user. A Message was sent to the browser`)
 });
 
 
 
-
-app.listen(PORT , () => console.log(`app listening on port ${PORT}!`));
+app.listen(PORT , () => console.log(`>> app listening on port ${PORT}!`));
