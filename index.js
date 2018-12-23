@@ -10,7 +10,8 @@ const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(URL , {useNewUrlParser: true}).then( () => {
+
+mongoose.connect(URL , {useNewUrlParser: true}).then( () => {   //opening connection to the DB.
     console.log(`Connected to Mongo!`);
 }, err => {
     console.log(`Error:${err}`);
@@ -18,30 +19,32 @@ mongoose.connect(URL , {useNewUrlParser: true}).then( () => {
 
 
 
-app.all('*' , (req , res , next) => {
-    console.log(`I am everywhere...`)
-    next();
-});
-
 app.get('/getAllAthletes' , (req , res) => {      
-    console.log(`You are in GET`); 
-    connector.findThemAll(req , res);  
+    console.log(`In GET`); 
+    connector.fetchAllDocuments(req , res);  
 });
 
 
 app.get('/getAthletesBySportNameBestRecord' , (req , res) => {
-    console.log(`You are in SUPER_GET`);
+    console.log(`In SUPER_GET`);
     let urlPart = url.parse(req.url , true);
     let query   = urlPart.query;
-    connector.getWithFilter(req , res , query);
+    connector.getWithFilter(res , query);
 });
 
 
 app.post('/updateRecord' , (req , res) => {
-    console.log(`You are in POST`);
+    console.log(`In POST`);
     // Updating the inner field (='best_record')-> the field is located in the 'sport' object that located in the document..
     connector.updateRecord(req , res);
 });
+
+
+app.all('*' , (req , res) => {      //FallBack. For handling invalid routes
+    console.log(`Invalid route was entered by the user.`)
+    res.json(`Invalid route, please try again`);
+});
+
 
 
 
