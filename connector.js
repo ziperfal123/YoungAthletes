@@ -6,13 +6,12 @@ const       mongoose        =   require('mongoose'),
 
 // function to check if an input string represents a int/float number, using REGEX;
 let checkIfRecordIsNum = (recordToCheck) => {   
-    return /^[+]?\d+(\.\d+)?$/.test(recordToCheck); 
+    return /^[+]?\d+(\.\d+)?$/.test(recordToCheck);     
 }
 
 
-
 /* Functions for updating / fetching data from the DB, according to the relevant route from the index file. */
-module.exports = {      
+module.exports = {
     async fetchAllDocuments(req , res) {
         await YoungAthlete.find( {} , (err , youngAthletes) => {     
             if (err) {
@@ -20,9 +19,9 @@ module.exports = {
                 console.log(`>> ERR : ${err}`);
             }
             else {
-                if (youngAthletes.length > 0 ) { 
+                if (youngAthletes.length > 0 ) {
                     res.json(youngAthletes);    
-                    console.log(`>> Document/s was/were sent to the browser`);
+                    console.log(`>> Document/s was/were sent to the browser`);ד
                 }
                 else {
                     res.json(`There are no athletes in the DB at the moment`);    
@@ -32,33 +31,6 @@ module.exports = {
         });
     }, 
 
-    async updateRecord(req , res) {
-        let recordIsNum = checkIfRecordIsNum(req.body.bestRecordToUpdate);  // for param validation.
-        if (!recordIsNum) {     
-            res.json(`Please enter a valid record (only numbers)`);
-            console.log(`>> 'Please enter a valid record' Message was sent to the browser`);
-            return;
-        }
-        let searchFilter = { id : req.body.id , 'sport.best_record' : {$gt:req.body.bestRecordToUpdate} };
-        let documentUpdate = {$set:{'sport.best_record' : req.body.bestRecordToUpdate}};
-
-        await YoungAthlete.updateOne( searchFilter , documentUpdate , {} , (err , youngAthletes) => {
-            if (err) {
-                res.json(`Error was occured. Please try again`);
-                console.log(`>> ERR : ${err}`);
-            }
-            else {
-                if (youngAthletes.nModified != 0){         // in this case- document was changed. "nModified" makes us know how many changes happened in the Collection..
-                    res.json(`The athlete with the id number: '${req.body.id}' was Updated succesfully`);
-                    console.log(`>> 'Updated succesfully' Message was sent to the browser`);    
-                }
-                else {
-                    res.json(`Did not update. Wrong ID or record did not improved`);
-                    console.log(`>> 'Did not update' Message was sent to the browser`); 
-                }
-            }
-        });    
-    },
 
     async getWithFilter (res , query) {
         let recordIsNum = checkIfRecordIsNum(query.bestRecord);   // for param validation.
@@ -85,5 +57,35 @@ module.exports = {
                 }
             }
         });       
+    } , 
+    
+    
+    async updateRecord(req , res) {
+        let recordIsNum = checkIfRecordIsNum(req.body.bestRecordToUpdate);  // for param validation.
+        if (!recordIsNum) {     
+            res.json(`Please enter a valid record (only numbers)`);
+            console.log(`>> 'Please enter a valid record' Message was sent to the browser`);
+            return;
+        }
+        let searchFilter = { id : req.body.id , 'sport.best_record' : {$gt:req.body.bestRecordToUpdate} };
+        let documentUpdate = {$set:{'sport.best_record' : req.body.bestRecordToUpdate}};
+
+        await YoungAthlete.updateOne( searchFilter , documentUpdate , {} , (err , youngAthletes) => {
+            if (err) {
+                res.json(`Error was occured. Please try again`);
+                console.log(`>> ERR : ${err}`);
+            }
+            else {
+                if (youngAthletes.nModified != 0){         // in this case- document was changed. "nModified" makes us know how many changes happened in the Collection..
+                    res.json(`The athlete with the id number: '${req.body.id}' was Updated succesfully`);
+                    console.log(`>> 'Updated succesfully' Message was sent to the browser`);    
+                }
+                else {
+                    res.json(`Did not update. Wrong ID or record did not improved`);
+                    console.log(`>> 'Did not update' Message was sent to the browser`); 
+                }
+            }
+        });    
     }
+
 }

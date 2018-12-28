@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use(express.static('docs'));
 
 
 mongoose.connect(URL , {useNewUrlParser: true}).then( () => {   //opening connection to the DB.
@@ -40,6 +41,12 @@ app.post('/updateRecord' , (req , res) => {
     connector.updateRecord(req , res);
 });
 
+app.get('/api' , (req , res) => {
+    console.log(`>> In api`);
+    res.redirect('https://web.postman.co/collections/5691767-a200a985-9664-4610-b5b7-69cdc38d7382?workspace=18dd077b-4221-4067-8ed7-11590defa1a6');
+    console.log(`>> Client was redirected to the API Page`);
+
+});
 
 app.all('*' , (req , res) => {      //FallBack. For handling invalid routes
     res.json(`Invalid route, please try again`);
