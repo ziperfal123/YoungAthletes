@@ -45,20 +45,15 @@ app.post('/updateRecord' , (req , res) => {
 app.get('/api' , (req , res) => {
     console.log(`In API Route`);
     res.redirect(`https://documenter.getpostman.com/view/5691767/Rzn8RN8S#d55e93c1-80d4-4eed-a714-d98ce979d9af`);
-});
-
-
-app.get('/api' , (req , res) => {
-    console.log(`>> In api`);
-    res.redirect('https://web.postman.co/collections/5691767-a200a985-9664-4610-b5b7-69cdc38d7382?workspace=18dd077b-4221-4067-8ed7-11590defa1a6');
     console.log(`>> Client was redirected to the API Page`);
-
 });
+
 
 app.all('*' , (req , res) => {      //FallBack. For handling invalid routes
     res.json(`Invalid route, please try again`);
     console.log(`>> Invalid route was entered by the user. A Message was sent to the browser`)
 });
+
 
 
 
