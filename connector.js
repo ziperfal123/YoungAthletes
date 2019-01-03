@@ -5,6 +5,7 @@ const       mongoose        =   require('mongoose'),
 
 
 // function to check if an input string represents an int/float number, using REGEX;
+// this function is also a validation for making sure that the input is a *positive* number representing a valid record.
 let checkIfRecordIsNum = (recordToCheck) => {   
     return /^[+]?\d+(\.\d+)?$/.test(recordToCheck);     
 }
