@@ -21,7 +21,7 @@ module.exports = {
             else {
                 if (youngAthletes.length > 0 ) {
                     res.json(youngAthletes);    
-                    console.log(`>> Document/s was/were sent to the browser`);ד
+                    console.log(`>> Document/s was/were sent to the browser`);
                 }
                 else {
                     res.json(`There are no athletes in the DB at the moment`);    
