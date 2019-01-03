@@ -35,7 +35,7 @@ module.exports = {
     async getWithFilter (res , query) {
         let recordIsNum = checkIfRecordIsNum(query.bestRecord);   // for param validation.
         if (!recordIsNum) { 
-            res.json(`Please enter a valid record`);
+            res.json(`Please enter a valid, positive number as a record (only numbers , no latters)`);
             console.log(`>> 'Please enter a valid record' Message was sent to the browser`);
             return;
         }
