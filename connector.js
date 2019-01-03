@@ -4,7 +4,7 @@ const       mongoose        =   require('mongoose'),
             URL             =   consts.MLAB_URL;
 
 
-// function to check if an input string represents a int/float number, using REGEX;
+// function to check if an input string represents an int/float number, using REGEX;
 let checkIfRecordIsNum = (recordToCheck) => {   
     return /^[+]?\d+(\.\d+)?$/.test(recordToCheck);     
 }
@@ -31,7 +31,6 @@ module.exports = {
         });
     }, 
 
-
     async getWithFilter (res , query) {
         let recordIsNum = checkIfRecordIsNum(query.bestRecord);   // for param validation.
         if (!recordIsNum) { 
@@ -39,8 +38,8 @@ module.exports = {
             console.log(`>> 'Please enter a valid record' Message was sent to the browser`);
             return;
         }
-
-        let searchFilter = {'sport.sport_name':query.sportName , 'sport.best_record': {$lt:query.bestRecord} };
+        let sportNameInLowerCase = query.sportName.toLowerCase();
+        let searchFilter = {'sport.sport_name':sportNameInLowerCase , 'sport.best_record': {$lt:query.bestRecord} };
         await YoungAthlete.find( searchFilter , (err , youngAthletes) => {
             if (err) {
                 res.json(`Error was occured. Please try again`);
@@ -63,7 +62,7 @@ module.exports = {
     async updateRecord(req , res) {
         let recordIsNum = checkIfRecordIsNum(req.body.bestRecordToUpdate);  // for param validation.
         if (!recordIsNum) {     
-            res.json(`Please enter a valid record (only numbers)`);
+            res.json(`Please enter a valid, positive number as a record (only numbers , no latters)`);
             console.log(`>> 'Please enter a valid record' Message was sent to the browser`);
             return;
         }

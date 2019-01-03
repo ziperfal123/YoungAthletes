@@ -13,12 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(express.static('docs'));
 
-
 mongoose.connect(URL , {useNewUrlParser: true}).then( () => {   //opening connection to the DB.
     console.log(`>> Connected to Mongo!`);
 }, err => {
     console.log(`>> Error:${err}`);
 });
+
 
 
 
@@ -40,6 +40,13 @@ app.post('/updateRecord' , (req , res) => {
     console.log(`>> In POST`);
     connector.updateRecord(req , res);
 });
+
+
+app.get('/api' , (req , res) => {
+    console.log(`In API Route`);
+    res.redirect(`https://documenter.getpostman.com/view/5691767/Rzn8RN8S#d55e93c1-80d4-4eed-a714-d98ce979d9af`);
+});
+
 
 app.get('/api' , (req , res) => {
     console.log(`>> In api`);
